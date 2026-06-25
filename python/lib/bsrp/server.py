@@ -1,3 +1,4 @@
+import secrets
 from typing import Tuple
 
 from .utils import (
@@ -135,7 +136,7 @@ def verify_session(
         session_key
     )
 
-    if M_client != M_server:
+    if not secrets.compare_digest(M_client, M_server):
         raise MessageException("Messages do not match. Auth Failed.")
 
     H_AMK = _Hash(A, M_server, session_key)
