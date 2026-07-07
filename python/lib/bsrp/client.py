@@ -1,3 +1,4 @@
+import secrets
 from typing import Tuple
 
 from .utils import (
@@ -129,7 +130,7 @@ def verify_session(
     """
     client_H_AMK = _Hash(A, M, session_key)
 
-    if client_H_AMK != server_H_AMK:
+    if not secrets.compare_digest(client_H_AMK, server_H_AMK):
         raise EvidenceException("Evidence keys do not match. Auth Failed.")
 
     return client_H_AMK
